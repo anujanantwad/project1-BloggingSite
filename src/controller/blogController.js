@@ -25,7 +25,7 @@ const createBlog = async function (req, res) {
     if (Object.keys(data).length == 0) {
       return res.status(400).send({ status: false, msg: "blog data required" })
     }
-
+    /*************************** validation of Blog ********* */
     if (!isValid(data.title)) { return res.status(400).send({ status: false, msg: "Title must be present." }) }
 
     if (!isValid(data.body)) { return res.status(400).send({ status: false, msg: "Body must be present." }) }
@@ -34,9 +34,7 @@ const createBlog = async function (req, res) {
 
     if (!mongoose.isValidObjectId(data.authorId))
       return res.status(400).send({ status: false, msg: 'Please enter correct length of AuthorId Id' })
-      //  console.log(mongoose, 37);
-
-
+    
     let authId = await authorModel.findById(authorId)
 
     if (!authId) { return res.status(400).send({ status: false, msg: "AuthorId doesn't exist." }) }
@@ -220,7 +218,6 @@ const deleteByBlogId = async function (req, res) {
 
 
     //////////////////////------------------------------------------------------------------------------------------------------
-
 
 
     let deletedBlog = await blogModel.findOneAndUpdate({ _id: data, isDeleted: false }, { isDeleted: true, deletedAt: Date.now() }, { new: true })
