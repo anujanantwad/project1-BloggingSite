@@ -38,6 +38,11 @@ const createAuthor = async function (req, res) {
 
         if (!emailGet) { return res.status(400).send({ status: false, msg: "email is mandatory" }) }
 
+        
+        if (!data.title) { return res.status(400).send({ status: false, msg: "title is mandatory" }) }
+
+        if (!isValidtitle(data.title)) { return res.status(400).send({ status: false, msg: 'Enter valid enum  ["Mr", "Mrs", "Miss"]' }) }
+
         if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailGet.trim()))) { return res.status(400).send({ status: false, msg: "Enter a valid email address." }) }
 
         let validEmail = await authorModel.findOne({ email: emailGet })
@@ -46,9 +51,6 @@ const createAuthor = async function (req, res) {
 
         if (!isValid(data.pasword)) { return res.status(400).send({ status: false, msg: "password is mandatory" }) }
 
-        if (!data.title) { return res.status(400).send({ status: false, msg: "title is mandatory" }) }
-
-        if (!isValidtitle(data.title)) { return res.status(400).send({ status: false, msg: 'Enter valid enum  ["Mr", "Mrs", "Miss"]' }) }
 
         let created = await authorModel.create(data)
     

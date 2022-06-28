@@ -14,7 +14,7 @@ const auth1 = require("../middleware/authentication")
 /// Phase 1
 router.post('/authors', authController.createAuthor)
 
-router.post("/blogs", auth1.authenticate, blogController.createBlog)
+router.post("/blogs",  auth1.authenticate,blogController.createBlog)//
 
 router.get("/blogs", auth1.authenticate, blogController.getBlogs)
 
