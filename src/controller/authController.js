@@ -21,7 +21,7 @@ const createAuthor = async function (req, res) {
     try {
 
         let data = req.body
-        let emailGet = req.body.email
+        let emailGet=data.email
 
         if (!Object.keys(data).length) { return res.status(400).send({ status: false, msg: "You must enter data." }) }
 
@@ -36,13 +36,13 @@ const createAuthor = async function (req, res) {
 
         if (!(/^[a-zA-Z]+$/.test(data.lname.trim()))) { return res.status(400).send({ status: false, msg: "Enter a valid Last name." }) }
 
-        if (!data.email) { return res.status(400).send({ status: false, msg: "email is mandatory" }) }
+        if (!emailGet) { return res.status(400).send({ status: false, msg: "email is mandatory" }) }
 
-        if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email.trim()))) { return res.status(400).send({ status: false, msg: "Enter a valid email address." }) }
+        if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailGet.trim()))) { return res.status(400).send({ status: false, msg: "Enter a valid email address." }) }
 
         let validEmail = await authorModel.findOne({ email: emailGet })
        
-        if (validEmail) return res.status(400).send({ status: false, msg: `${email} Already email exist ` })
+        if (validEmail) return res.status(400).send({ status: false, msg: "email Already  exist "})
 
         if (!isValid(data.pasword)) { return res.status(400).send({ status: false, msg: "password is mandatory" }) }
 
